@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+
+{% block 'body' %}
+
+
+
+
+<div class="container-fluid" style="margin-top: 10vh;">
+  <div class="row" >
+    <div class="col-md-6 mx-auto" style="border: 2px solid #485935;padding:7vh;height:100%;">
+    {% if error %}
+    <div class="alert alert-danger d-flex align-items-center" role="alert">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+        class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+        <path
+          d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+      </svg>
+      <div>
+        {{errormsg}}
+      </div>
+    </div>
+    {% endif %}
+
+    {% if result %}
+    <div class="alert alert-success d-flex align-items-center" role="alert">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+        class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+        <path
+          d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+      </svg>
+      <div>
+        The Book is saved with id {{result}}
+      </div>
+    </div>
+    {% endif %}
+
+    <h1 style="text-align: center;">Update Book</h1><hr>
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="{{myform.bName.name}}" class="form-label">Book Name</label>
+        {{myform.bName}}
+      </div>
+      <div class="mb-3">
+        <label for="{{myform.publisher.name}}" class="form-label">Publisher</label>
+        {{myform.publisher}}
+      </div>
+      <div class="mb-3">
+        <label for="{{myform.author.name}}" class="form-label">Author</label>
+        {{myform.author}}
+      </div>
+      <div class="mb-3">
+        <label for="{{myform.category.name}}" class="form-label">Category</label>
+        {{myform.category}}
+      </div>
+      <div class="form-text">If there is multiple name then separate it with comma(,)</div>
+      <div class="mb-3">
+        <label for="{{myform.edition.name}}" class="form-label">Edition</label>
+        {{myform.edition}}
+      </div>
+      <div class="mb-3">
+        <label for="{{myform.count.name}}" class="form-label">Quantity</label>
+        {{myform.count}}
+        <div class="form-text">Enter the Quantity Greater than or Equal to 0</div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+            <button type="submit" class="btn" value="Save" style="display:block;margin: 0 auto;background-color: #93a267;border: none;"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+        </div>
+    </div>
+    </form>
+  </div>
+  </div>
+</div>
+
+<script>
+  input = document.getElementsByTagName('input')
+    for (i of input) {
+        i.className = "form-control";
+    }
+</script>
+
+{% endblock 'body' %}

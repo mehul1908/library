@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+
+{% block 'body' %}
+
+
+
+
+<h1>Available Books</h1>
+<hr>
+<hr>
+<div class="col-md-6 mx-auto">
+    {% if error %}
+      <div class="alert alert-danger d-flex align-items-center" role="alert">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+          class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img"
+          aria-label="Warning:">
+          <path
+            d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+        </svg>
+        <div>
+          {{errormsg}}
+        </div>
+      </div>
+      {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search Here" aria-label="Recipient's username"
+                aria-describedby="button-addon2" name="query" id="'query" value="{{temp}}">
+            <button class="btn" type="submit" id="button-addon2"
+                style="display:block;margin: 0 auto;background-color: #93a267;border: none;">Search <i
+                    class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+    </form>
+</div>
+<table class="table table-center text-center">
+    <thead>
+        <tr>
+            <th>Book Id</th>
+            <th>Book Name</th>
+            <th>Author</th>
+            <th>Publisher</th>
+            <th>Category</th>
+            <th>Edition</th>
+            <th>Available Nos.</th>
+            
+            {% if request.session.type == 1 or request.session.type == 2 %}
+            <th>Edit</th>
+            <th>Delete</th>
+            {% endif %}
+
+            
+            {% if request.session.type == 3 or request.session.type == 4 %}
+            <th>Issue</th>
+                
+            {% endif %}
+                
+                
+            
+        </tr>
+    </thead>
+    <tbody id="tbody">
+
+
+        {% for dt in mydata %}
+
+        <tr>
+            <td>{{dt.book_id}}</td>
+            <td>{{dt.bName}}</td>
+            <td>{{dt.author}}</td>
+            <td>{{dt.publisher}}</td>
+            <td>{{dt.category}}</td>
+            <td>{{dt.edition}}</td>
+            <td>{{dt.count}}</td>
+
+
+            {% if request.session.type == 1 or request.session.type == 2 %}
+            <td><a href="{% url 'editbook' id=dt.book_id %}" class="accept"><i
+                        class="fa-solid fa-pen-to-square"></i></a></td>
+            <td><a href="{% url 'delbook' id=dt.book_id %}" class="reject"><i class="fa-solid fa-trash"></i></a></td>
+            {%  endif %}
+
+            {% if request.session.type == 3 or request.session.type == 4 %}
+            <td><a href="{% url 'issuebook' id=dt.book_id %}" class="accept"><i class="fa-solid fa-id-card"></i></a></td>
+            {%  endif %}
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
+<style>
+    a {
+        color: black;
+    }
+
+    .accept:hover {
+        color: darkgreen;
+    }
+
+    .reject:hover {
+        color: red;
+    }
+</style>
+{% endblock 'body' %}

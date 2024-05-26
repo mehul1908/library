@@ -1,0 +1,128 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome.min.css' %}">
+    <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+    <style>
+        body{
+            background-color: #f1f1e9;
+        }
+        nav{
+            background-color: #93a267;
+        }
+        .nav-link {
+            color: #000;
+            font-weight: bolder;
+        }
+
+        .nav-link:hover , .login-opt:hover{
+            color:#fbfbfb;
+            background-color:#485935;
+        }
+
+        .dropdown-menu{
+          background-color: #93a267;
+          border: none;
+          
+        }
+        .dropdown-item{
+          color:#000
+        }
+        .dropdown-item:hover{
+          background-color: #485935;
+          color:#f1f1e9;
+        }
+
+        .login-opt{
+          margin:inherit 5px;
+          padding: 10px;
+          border-radius: 10%;
+          color: #000;
+          text-decoration: none;
+          font-weight: bolder;
+        }
+
+        .btn{
+          display: block;
+          margin: 0 auto;
+          border: none;
+          color: #fbfbfb;
+          font-weight: bold;
+        }
+
+        .btn:hover{
+          color:#f1f1e9;
+          background-color: #485935;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="navbar " >
+                <ul class="nav nav-pills">
+                    <a class="nav-link" href="{% url 'home' %}">
+                        <img src="{% static 'logo.jpg' %}" alt="" width="40" height="30" class="d-inline-block align-text-top" style="border-radius: 50%;">
+                        Library Dept.
+                    </a>
+                    
+                    {% if request.session.type == 1 or request.session.type == 2 %}
+                    <li class="nav-item">
+                      <a class="nav-link" aria-current="page" href="{% url 'approvepage' %}">Approval of Users</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" aria-current="page" href="{% url 'userlist' %}">UserList</a>
+                    </li>
+                    {% endif %}
+                      
+                    
+                    <li class="nav-item dropdown">
+                      <span class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Books</span>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'listbook' %}">List of Books</a></li>
+                        {% if request.session.type == 1 or request.session.type == 2 %}
+                        <li><a class="dropdown-item" href="{% url 'addbook' %}">Entry of Book</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Approval of Books</a></li>
+                        {% endif %}
+                        {% if request.session.type == 3 or request.session.type == 4 %}
+                        <li><a class="dropdown-item" href="{% url 'returnbookpage' %}">Book Return</a></li>
+                        {% endif %}
+                      </ul>
+                    </li>
+                  </ul>
+                  <span >
+                    
+                    {% if request.session.username %}
+                    <span style="font-weight: bolder;color: black;"><i class="fa-solid fa-user"></i> {{request.session.username}}</span>
+                    <a href="{% url 'logouts' %}" style="text-decoration: none;"><span class="login-opt"><i class="fa-solid fa-right-from-bracket"></i>Logout</span></a>
+                    <a href="{% url 'edituser' id=request.session.userid %}" style="text-decoration: none;"><span class="login-opt"><i class="fa-solid fa-pen-to-square"></i>Edit</span></a>
+                    <a href="{% url 'deluser'  id=request.session.userid %}" style="text-decoration: none;"><span class="login-opt"><i class="fa-solid fa-trash"></i>Delete</span></a>
+                    {% else %}
+                    <a href="{% url 'login' %}" style="text-decoration: none;"><span class="login-opt"><i class="fa-solid fa-right-to-bracket"></i> Login</span></a>
+                    <a href="{% url 'signup' %}" style="text-decoration: none;"><span class="login-opt"><i class="fa-solid fa-user-plus"></i> Sign Up</span></a>
+                    {% endif %}
+                      
+                    
+                  </span>
+            </nav>
+        </div>
+       
+       {% block 'body' %}
+        
+       {% endblock 'body' %}
+         
+    </div>
+
+</body>
+</html>

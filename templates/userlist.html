@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+
+{% block 'body' %}
+    <h1>List of Users</h1><hr>
+    <table class="table table-center text-center">
+        <thead>
+            <tr>
+                <th>User Id</th>
+                <th>User Name</th>
+                <th>User Type</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            
+            {% for dt in mydata %}
+            
+                <tr>
+                    <td>{{dt.user_id}}</td>
+                    <td>{{dt.uName}}</td>
+                    
+                    {% if 1 == dt.uType %}
+                        <td>Head Librarian</td>
+                    {% elif 2 == dt.uType %}
+                        <td>Librarian</td>
+                    {% elif 3 == dt.uType%}
+                        <td>Normal User</td>
+                    {% elif 4 == dt.uType %}
+                        <td>VIP User</td>
+                    {% endif %}
+
+                    <td><a href="{% url 'edituser' id=dt.user_id %}" class="accept"><i class="fa-solid fa-user-pen"></i></a></td>
+                    <td><a href="{% url 'deluser' id=dt.user_id %}" class="reject"><i class="fa-solid fa-user-slash"></i></a></td>
+                        
+                </tr>
+            {% endfor %}
+                
+        </tbody>
+    </table>
+
+    <style>
+        a{
+            color: black;
+        }
+
+        .accept:hover{
+            color: darkgreen;
+        }
+
+        .reject:hover{
+            color: red;
+        }
+    </style>
+{% endblock 'body' %}
+    
