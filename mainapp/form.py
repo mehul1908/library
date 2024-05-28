@@ -2,7 +2,6 @@ from django import forms
 from . import models
 
 uType=((2,'Librarian')  , (4,'VIP User') , (3 , 'Normal User'))
-sType=((1 , 'Active') , (2 , 'Inactive'))
 
 class LoginForm(forms.ModelForm):
     class Meta:

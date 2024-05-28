@@ -9,7 +9,9 @@
                 <th>Transaction Id</th>
                 <th>Book Name</th>
                 <th>Issue Date and Time</th>
+                {% if request.session.type == 3 or request.session.type == 4 %}
                 <th>Return</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -21,9 +23,9 @@
                     <td>{{dt.trans_id.trans_id}}</td>
                     <td>{{dt.trans_id.book_id.bName}}</td>
                     <td>{{dt.trans_id.issueDtTm}}</td>
-
+                    {% if request.session.type == 3 or request.session.type == 4 %}
                     <td><a href="{% url 'returnbook' id=dt.trans_id.trans_id %}" class="accept"><i class="fa-solid fa-user-check"></i></a></td>
-                        
+                    {% endif %}
                 </tr>
             {% endfor %}
                 

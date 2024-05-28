@@ -7,7 +7,6 @@ import json
 import datetime
 # Create your views here.
 def home(request):
-    print(request.session.has_key("type"))
     return render(request , 'home.html')
 
 
@@ -196,10 +195,14 @@ def issueBook(request , id):
 
 
 def returnBookPage(request ):
-    if (request.session.has_key("type")) and (request.session['type']==3 or request.session['type']==4):
-        user=get_object_or_404(models.User , user_id=request.session['userid'])
-        data=models.IssuedBook.objects.filter(user_id=user)
-        return render(request,'returnbook.html' , {'mydata':data})
+    if (request.session.has_key("type")) :
+        if (request.session['type']==3 or request.session['type']==4):
+            user=get_object_or_404(models.User , user_id=request.session['userid'])
+            data=models.IssuedBook.objects.filter(user_id=user)
+            return render(request,'returnbook.html' , {'mydata':data})
+        else:
+            data=models.IssuedBook.objects.all()
+            return render(request,'returnbook.html' , {'mydata':data})
     else:
             return render(request , 'login.html' , {'myform':form.LoginForm() , 'error':True , 'errormsg':"Please Login with correct crendentials"})
 
