@@ -18,6 +18,7 @@ urlpatterns = [
     path('returnbook/<int:id>' , views.returnBook , name='returnbook'),
     path('userlist' , views.userlist , name='userlist'),
     path('edituser/<str:id>' , views.EditUser.as_view() , name='edituser'),
-    path('deluser/<str:id>' , views.delUser , name='deluser')
+    path('deluser/<str:id>' , views.delUser , name='deluser'),
+    path('sendmail' , views.send_mail , name='sendmail')
 
 ]

@@ -5,6 +5,8 @@ from django.http import HttpResponse,request
 from django.contrib.auth import logout
 import json
 import datetime
+
+
 # Create your views here.
 def home(request):
     return render(request , 'home.html')
@@ -265,3 +267,16 @@ def delUser(request , id):
             return redirect('logouts')
     else:
         return render(request , 'login.html' , {'myform':form.LoginForm() , 'error':True , 'errormsg':"Please Login with correct crendentials"})
+
+from django.conf import settings
+from django.core.mail import send_mail
+
+
+def sendMail(request):
+    username="mehul"
+    subject = 'welcome to GFG world'
+    message = f'Hi {username}, thank you for registering in geeksforgeeks.'
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = ["vijayvargiyamehul@mail.com", ]
+    send_mail( subject, message, email_from, recipient_list )
+    return HttpResponse("Email sent Successfully")
